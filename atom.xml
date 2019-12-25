@@ -34,6 +34,37 @@
   </entry>
   
   <entry>
+    <title>hexo——轻量、简易的博客</title>
+    <link href="http://yoursite.com/2019/10/12/test/"/>
+    <id>http://yoursite.com/2019/10/12/test/</id>
+    <published>2019-10-12T06:40:46.000Z</published>
+    <updated>2019-12-25T08:16:06.443Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;Hello
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Hexo" scheme="http://yoursite.com/categories/Hexo/"/>
+    
+      <category term="教程" scheme="http://yoursite.com/categories/Hexo/%E6%95%99%E7%A8%8B/"/>
+    
+    
+      <category term="Hexo" scheme="http://yoursite.com/tags/Hexo/"/>
+    
+      <category term="教程" scheme="http://yoursite.com/tags/%E6%95%99%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
     <title>12306自动抢票Linux版搭建</title>
     <link href="http://yoursite.com/2019/06/15/12306/"/>
     <id>http://yoursite.com/2019/06/15/12306/</id>

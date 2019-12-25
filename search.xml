@@ -53,6 +53,20 @@
 ]]></content>
   </entry>
   <entry>
+    <title>hexo——轻量、简易的博客</title>
+    <url>/2019/10/12/test/</url>
+    <content><![CDATA[<p>Hello word</p>
+]]></content>
+      <categories>
+        <category>Hexo</category>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+        <tag>教程</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>12306自动抢票Linux版搭建</title>
     <url>/2019/06/15/12306/</url>
     <content><![CDATA[<h2 id="12306辅助抢票Linux版"><a href="#12306辅助抢票Linux版" class="headerlink" title="12306辅助抢票Linux版"></a>12306辅助抢票Linux版</h2><p><img src="https://i.loli.net/2019/12/25/wFdvxZbCLgTNMue.jpg" alt=""></p>
