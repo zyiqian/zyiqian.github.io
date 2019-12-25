@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-12-25T04:51:42.649Z</updated>
+  <updated>2019-12-25T08:23:53.745Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://yoursite.com/2019/12/25/mybolog/"/>
     <id>http://yoursite.com/2019/12/25/mybolog/</id>
     <published>2019-12-25T04:22:03.000Z</published>
-    <updated>2019-12-25T04:51:42.649Z</updated>
+    <updated>2019-12-25T08:23:53.745Z</updated>
     
     <summary type="html">
     
@@ -29,33 +29,6 @@
     
     </summary>
     
-    
-    
-  </entry>
-  
-  <entry>
-    <title>hexo——轻量、简易的博客</title>
-    <link href="http://yoursite.com/2019/10/12/test/"/>
-    <id>http://yoursite.com/2019/10/12/test/</id>
-    <published>2019-10-12T06:40:46.000Z</published>
-    <updated>2019-12-25T08:16:06.443Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;Hello
-        
-      
-    
-    </summary>
-    
-    
-      <category term="Hexo" scheme="http://yoursite.com/categories/Hexo/"/>
-    
-      <category term="教程" scheme="http://yoursite.com/categories/Hexo/%E6%95%99%E7%A8%8B/"/>
     
     
       <category term="Hexo" scheme="http://yoursite.com/tags/Hexo/"/>
