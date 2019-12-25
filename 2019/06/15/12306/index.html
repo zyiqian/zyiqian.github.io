@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    12306自动抢票Linux版搭建 |
+    
+    Jason</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Jason" type="application/atom+xml">
+</head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-12306" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+  
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      12306自动抢票Linux版搭建
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2019/06/15/12306/" class="article-date">
+  <time datetime="2019-06-15T02:12:33.000Z" itemprop="datePublished">2019-06-15</time>
+</a>
+        
+      </div>
+    
+
+    
+      
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <h2 id="12306辅助抢票Linux版"><a href="#12306辅助抢票Linux版" class="headerlink" title="12306辅助抢票Linux版"></a>12306辅助抢票Linux版</h2><p><img src="https://i.loli.net/2019/12/25/wFdvxZbCLgTNMue.jpg" alt=""></p>
+<a id="more"></a>
+<h4 id="环境介绍："><a href="#环境介绍：" class="headerlink" title="环境介绍："></a>环境介绍：</h4><ul>
+<li>centos7 x</li>
+<li>python3.6.5</li>
+<li>Google Chrome 76.0.3809.100  (适合chromedriver)</li>
+</ul>
+<p>要带安装有图形化界面的centos</p>
+<p>服务器装图像化：<a href="https://blog.csdn.net/mamamalululu00000000/article/details/88106524" target="_blank" rel="noopener">https://blog.csdn.net/mamamalululu00000000/article/details/88106524</a> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">安装图形化</span><br><span class="line">yum groups install &quot;X Window System&quot; -y</span><br><span class="line">yum groups install &quot;GNOME Desktop&quot; -y</span><br><span class="line">如果出现以下错误:</span><br><span class="line">file &#x2F;boot&#x2F;efi&#x2F;EFI&#x2F;centos from install of fwupdate-efi-12-5.el7.centos.x86_64 conflicts with file from package grub2-common-1:2.02-0.65.el7.centos.2.noarch</span><br><span class="line">执行</span><br><span class="line">yum upgrade -y</span><br><span class="line">然后再装，更新完一般没啥错了，错也不要管，往下走看看</span><br><span class="line">yum groups install &quot;GNOME Desktop&quot; -y</span><br><span class="line"></span><br><span class="line">systemctl set-default multi-user.target  &#x2F;&#x2F;设置成命令模式</span><br><span class="line">                                 or（或者）</span><br><span class="line">systemctl set-default graphical.target  &#x2F;&#x2F;设置成图形模式</span><br><span class="line">设置成图形模式</span><br></pre></td></tr></table></figure>
+
+<p>然后登录阿里云实例控制台</p>
+<p><img src="https://i.loli.net/2019/12/21/IEMUa3tRlJGhp6Y.jpg" alt=""></p>
+<p>连接上然后reboot重启就成图形化界面了</p>
+<p><img src="https://i.loli.net/2019/12/21/AOqkjI9CEm1ui5f.jpg" alt=""></p>
+<p>不能在finalshell、xshell等远程控制终端 下执行 因为后面打开浏览器需要用到图形界面，所以只能在VMware下面直接操作</p>
+<h4 id="一、下载安装python3-6-5"><a href="#一、下载安装python3-6-5" class="headerlink" title="一、下载安装python3.6.5"></a>一、下载安装python3.6.5</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">安装python可能用到的相关插件</span><br><span class="line">yum groupinstall &#39;Development Tools&#39; -y</span><br><span class="line">yum install -y ncurses-libs zlib-devel mysql-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel</span><br><span class="line"></span><br><span class="line">下载 （如果下载慢的话上传我的）</span><br><span class="line">[root@host4 ~]# cd &#x2F;usr&#x2F;local&#x2F;src&#x2F;</span><br><span class="line">wget https:&#x2F;&#x2F;www.python.org&#x2F;ftp&#x2F;python&#x2F;3.6.5&#x2F;Python-3.6.5.tar.xz</span><br><span class="line"></span><br><span class="line">解压</span><br><span class="line">tar -xvf Python-3.6.5.tar.xz -C &#x2F;usr&#x2F;local&#x2F;</span><br><span class="line">mkdir &#x2F;usr&#x2F;local&#x2F;python3</span><br><span class="line">cd &#x2F;usr&#x2F;local&#x2F;Python-3.6.5</span><br><span class="line"></span><br><span class="line">编译安装</span><br><span class="line">.&#x2F;configure --prefix&#x3D;&#x2F;usr&#x2F;local&#x2F;python3 --enable-optimizations</span><br><span class="line">make</span><br><span class="line">make altinstall   </span><br><span class="line">(安装需要有点久)</span><br><span class="line"></span><br><span class="line">修改软链接：</span><br><span class="line">把原有的修改为：</span><br><span class="line">cd  &#x2F;usr&#x2F;bin&#x2F;</span><br><span class="line">创建一个软连接</span><br><span class="line">mv &#x2F;usr&#x2F;bin&#x2F;python &#x2F;usr&#x2F;bin&#x2F;python_old</span><br><span class="line">ln -s &#x2F;usr&#x2F;local&#x2F;python3&#x2F;bin&#x2F;python3.6 &#x2F;usr&#x2F;bin&#x2F;python</span><br><span class="line">mv &#x2F;usr&#x2F;bin&#x2F;pip &#x2F;usr&#x2F;bin&#x2F;pip_old</span><br><span class="line">ln -s &#x2F;usr&#x2F;local&#x2F;python3&#x2F;bin&#x2F;pip3.6 &#x2F;usr&#x2F;bin&#x2F;pip</span><br><span class="line">创建软连接之前一定要对以存在的&#x2F;usr&#x2F;bin&#x2F;python更名，否则出现如下错误</span><br><span class="line">ln: failed to create symbolic link ‘&#x2F;usr&#x2F;bin&#x2F;python’: File exists</span><br><span class="line"></span><br><span class="line">!!!!!!重要！！！！！我之前就是因为这个yum 命令用不了 </span><br><span class="line">最后修改yum&#x2F;gnome-tweak-tool&#x2F;urlgrabber配置文件，否则之后使用yum可能报错</span><br><span class="line"></span><br><span class="line">以下文件都要修改文件行首处</span><br><span class="line">[root@host4 local]# cd &#x2F;usr&#x2F;bin&#x2F;</span><br><span class="line">[[root@host4 bin]# ls yum*    &#x2F;&#x2F;下面几个文件把开头的Python末尾改成Python2</span><br><span class="line">yum  yum-builddep  yum-config-manager  yum-debug-dump  yum-debug-restore  yumdownloader  yum-groups-manager</span><br><span class="line">[root@host4 bin]#ls yum*</span><br><span class="line">#!&#x2F;usr&#x2F;bin&#x2F;python</span><br><span class="line">改为:</span><br><span class="line">#! &#x2F;usr&#x2F;bin&#x2F;python2     (修改第一行)</span><br><span class="line">就是把原来额Python后面添加2就行了</span><br><span class="line">以下一样（下面如果你主机没有那项就不用管）</span><br><span class="line">[root@host4 bin]# vim &#x2F;usr&#x2F;bin&#x2F;yum</span><br><span class="line">[root@host4 bin]# vim yum-builddep </span><br><span class="line">[root@host4 bin]# vim yum-config-manager </span><br><span class="line">[root@host4 bin]# vim yum-debug-dump </span><br><span class="line">[root@host4 bin]# vim yum-debug-restore </span><br><span class="line">[root@host4 bin]# vim yumdownloader </span><br><span class="line">[root@host4 bin]# vim yum-groups-manager</span><br><span class="line">[root@host4 bin]# vim &#x2F;usr&#x2F;bin&#x2F;gnome-tweak-tool  </span><br><span class="line">[root@host4 bin]# vim &#x2F;usr&#x2F;bin&#x2F;urlgrabber  </span><br><span class="line">[root@host4 bin]# vim &#x2F;usr&#x2F;libexec&#x2F;urlgrabber-ext-down</span><br><span class="line"></span><br><span class="line">配置python环境</span><br><span class="line">[root@host4 bin]# vim &#x2F;etc&#x2F;profile.d&#x2F;python3.sh</span><br><span class="line">export PYTHON_HOME&#x3D;&#x2F;usr&#x2F;local&#x2F;python3   (python的安装路径)</span><br><span class="line">export PATH&#x3D;$PYTHON_HOME&#x2F;bin:$PATH</span><br><span class="line">[root@host4 bin]# source &#x2F;etc&#x2F;profile.d&#x2F;python3.sh</span><br><span class="line">[root@host4 bin]# python -V</span><br><span class="line">Python 3.6.5</span><br><span class="line"> </span><br><span class="line">------ok python环境搭建好</span><br></pre></td></tr></table></figure>
+
+<h4 id="二、安装linux版谷歌"><a href="#二、安装linux版谷歌" class="headerlink" title="二、安装linux版谷歌"></a>二、安装linux版谷歌</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">需要把防火墙和selinux关闭（一键三连）</span><br><span class="line">[root@host4 ~]# vim &#x2F;etc&#x2F;selinux&#x2F;config</span><br><span class="line">selinux&#x3D;disable</span><br><span class="line">1、上传包readme.zip  </span><br><span class="line">上传readme.zip包到 &#x2F;use&#x2F;local&#x2F;src 下 （随便一个目录）</span><br><span class="line">cd &#x2F;usr&#x2F;local&#x2F;src</span><br><span class="line">rz （上传包）</span><br><span class="line">unzip readme.zip</span><br><span class="line">cd readme&#x2F;linux</span><br><span class="line">[root@host4 linux]# ls</span><br><span class="line">chromedriver  font.zip  google-chrome-stable_current_x86_64.rpm  </span><br><span class="line"></span><br><span class="line">2、安装谷歌浏览器</span><br><span class="line">[root@host4 linux]# yum -y localinstall google-chrome-stable_current_x86_64.rpm  &#x2F;&#x2F;自己解决依赖问题</span><br><span class="line"></span><br><span class="line">3、将linux 目录下 chromedriver复制到 </span><br><span class="line">&#x2F;usr&#x2F;bin </span><br><span class="line">&#x2F;usr&#x2F;local&#x2F;python3&#x2F;lib&#x2F;python3.6&#x2F;site-packages&#x2F; 两个目录下（具体是哪个忘了 反正两个都复制行了）</span><br><span class="line">[root@host4 linux]# cp chromedriver &#x2F;usr&#x2F;bin</span><br><span class="line">[root@host4 linux]# cp chromedriver &#x2F;usr&#x2F;local&#x2F;python3&#x2F;lib&#x2F;python3.6&#x2F;site-packages&#x2F;</span><br><span class="line">[root@host4 linux]# chmod +x &#x2F;usr&#x2F;bin&#x2F;chromedriver </span><br><span class="line">4、安装字体。linux 目录下有 font.zip,复制解压到目录: &#x2F;usr&#x2F;share&#x2F;fonts&#x2F;local</span><br><span class="line">mkdir &#x2F;usr&#x2F;share&#x2F;fonts&#x2F;local</span><br><span class="line">cp font.zip &#x2F;usr&#x2F;share&#x2F;fonts&#x2F;local</span><br><span class="line">cd &#x2F;usr&#x2F;share&#x2F;fonts&#x2F;local</span><br><span class="line">unzip font.zip</span><br><span class="line">chmod 777 -R &#x2F;usr&#x2F;share&#x2F;fonts&#x2F;local    &#x2F;&#x2F;给目录添加权限  </span><br><span class="line">fc-cache &#x2F;usr&#x2F;share&#x2F;fonts&#x2F;local&#x2F;       &#x2F;&#x2F;安装字体 </span><br><span class="line"></span><br><span class="line">5、修改谷歌浏览器配置（最后行）</span><br><span class="line">[root@host4 ~]# vim &#x2F;usr&#x2F;bin&#x2F;google-chrome</span><br><span class="line">exec -a &quot;$0&quot; &quot;$HERE&#x2F;chrome&quot; &quot;$@&quot; --no-sandbox</span><br><span class="line"></span><br><span class="line">6、启动(不能在finalshell或者xshell启动) 去带有图形界面的VM下启动，启动弹出个浏览器就可以关了</span><br><span class="line">[root@host4 ~]# &#x2F;usr&#x2F;bin&#x2F;google-chrome-stable --no-sandbox</span><br></pre></td></tr></table></figure>
+
+<h4 id="三、安装12306主程序"><a href="#三、安装12306主程序" class="headerlink" title="三、安装12306主程序"></a>三、安装12306主程序</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">1、上传这个12306包、可以去GitHub直接clone 或者先下载在本地  藐视clone有点慢</span><br><span class="line">GitHub地址:  https:&#x2F;&#x2F;github.com&#x2F;testerSunshine&#x2F;12306</span><br><span class="line"></span><br><span class="line">如果是本地下载上来的先解压到你需要存放的地方 </span><br><span class="line">12306-master.zip</span><br><span class="line">2、然后进入包目录下</span><br><span class="line">cd &#x2F;date</span><br><span class="line">rz</span><br><span class="line">unzip 12306.zip</span><br><span class="line">[root@host4 ~]# cd &#x2F;date&#x2F;12306&#x2F; </span><br><span class="line"></span><br><span class="line">3、安装依赖包（一定要在12306项目包中安装）</span><br><span class="line">[root@host4 12306]# pip3 install -i https:&#x2F;&#x2F;pypi.tuna.tsinghua.edu.cn&#x2F;simple -r requirements.txt  </span><br><span class="line">如果没有pip3就是用pip执行</span><br><span class="line">[root@host4 12306]# pip install -i https:&#x2F;&#x2F;pypi.tuna.tsinghua.edu.cn&#x2F;simple -r requirements.txt  </span><br><span class="line">&#x2F;&#x2F;安装过程估计会有网络超时之类的，如果安装不成功就继续安装   不然后面出现一堆错误让你更加头疼</span><br><span class="line">安装完成后会有让你更新 ‘pip install ---’</span><br><span class="line">你就更新它</span><br><span class="line"></span><br><span class="line">[root@host4 12306]# pip install --upgrade pip</span><br><span class="line">报错就再执行一次，两次  再把错截图给我</span><br><span class="line">[root@host4 12306]# pip3 install -i https:&#x2F;&#x2F;pypi.tuna.tsinghua.edu.cn&#x2F;simple -r requirements.txt</span><br><span class="line">4、以下一些配置文件，我也不懂是啥 反正不修改就报错</span><br><span class="line">[root@host4 12306]# vim &#x2F;usr&#x2F;local&#x2F;python3&#x2F;lib&#x2F;python3.6&#x2F;site-packages&#x2F;tensorflow&#x2F;python&#x2F;framework&#x2F;dtypes.py +516</span><br><span class="line">#把原来的替换成下面的</span><br><span class="line">_np_qint8 &#x3D; np.dtype([(&quot;qint8&quot;, np.int8, (1,))])</span><br><span class="line">_np_quint8 &#x3D; np.dtype([(&quot;quint8&quot;, np.uint8, (1,))])</span><br><span class="line">_np_qint16 &#x3D; np.dtype([(&quot;qint16&quot;, np.int16, (1,))])</span><br><span class="line">_np_quint16 &#x3D; np.dtype([(&quot;quint16&quot;, np.uint16, (1,))])</span><br><span class="line">_np_qint32 &#x3D; np.dtype([(&quot;qint32&quot;, np.int32, (1,))])</span><br><span class="line"></span><br><span class="line">不同Python路径也不同上面的不行就找下面这条。再不行就自己找  find &#x2F; -name &quot;dtypes.py&quot;</span><br><span class="line">[root@host4 12306]# vim &#x2F;usr&#x2F;local&#x2F;python3&#x2F;lib&#x2F;python3.6&#x2F;site-packages&#x2F;tensorflow_core&#x2F;python&#x2F;framework&#x2F;dtypes.py +516</span><br><span class="line">#把原来的替换成下面的</span><br><span class="line">_np_qint8 &#x3D; np.dtype([(&quot;qint8&quot;, np.int8, (1,))])</span><br><span class="line">_np_quint8 &#x3D; np.dtype([(&quot;quint8&quot;, np.uint8, (1,))])</span><br><span class="line">_np_qint16 &#x3D; np.dtype([(&quot;qint16&quot;, np.int16, (1,))])</span><br><span class="line">_np_quint16 &#x3D; np.dtype([(&quot;quint16&quot;, np.uint16, (1,))])</span><br><span class="line">_np_qint32 &#x3D; np.dtype([(&quot;qint32&quot;, np.int32, (1,))])</span><br><span class="line"></span><br><span class="line">[root@host4 12306]# vim &#x2F;usr&#x2F;local&#x2F;python3&#x2F;lib&#x2F;python3.6&#x2F;site-packages&#x2F;tensorboard&#x2F;compat&#x2F;tensorflow_stub&#x2F;dtypes.py +541 </span><br><span class="line">#把原来的替换成下面的</span><br><span class="line">_np_qint8 &#x3D; np.dtype([(&quot;qint8&quot;, np.int8, (1,))])</span><br><span class="line">_np_quint8 &#x3D; np.dtype([(&quot;quint8&quot;, np.uint8, (1,))])</span><br><span class="line">_np_qint16 &#x3D; np.dtype([(&quot;qint16&quot;, np.int16, (1,))])</span><br><span class="line">_np_quint16 &#x3D; np.dtype([(&quot;quint16&quot;, np.uint16, (1,))])</span><br><span class="line">_np_qint32 &#x3D; np.dtype([(&quot;qint32&quot;, np.int32, (1,))])</span><br><span class="line"></span><br><span class="line">[root@host4 12306]# vim &#x2F;usr&#x2F;local&#x2F;python3&#x2F;lib&#x2F;python3.6&#x2F;site-packages&#x2F;keras&#x2F;engine&#x2F;saving.py +292</span><br><span class="line">&#x2F;&#x2F;注释掉一下三行</span><br><span class="line">    # warnings.warn(&#39;No training configuration found in save file: &#39;</span><br><span class="line">    #               &#39;the model was *not* compiled. &#39;</span><br><span class="line">    #               &#39;Compile it manually.&#39;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="四、修改配置文件："><a href="#四、修改配置文件：" class="headerlink" title="四、修改配置文件："></a>四、修改配置文件：</h4><p>可以参考我下面的配置     </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding&#x3D;utf-8 -*-</span><br><span class="line"># 关于软件使用配置说明，一定要看！！！</span><br><span class="line"># ps: 如果是候补车票，需要通过人证一致性核验的用户及激活的“铁路畅行”会员可以提交候补需求，请您按照操作说明在铁路12306app.上完成人证核验</span><br><span class="line"># 关于候补了之后是否还能继续捡漏的问题在此说明： 软件为全自动候补加捡漏，如果软件候补成功则会停止抢票，发出邮件通知，但是不会影响你继续捡漏，</span><br><span class="line"># 如果这个时候捡漏捡到的话，也是可以付款成功的，也就是说，捡漏+候补，可以最大程度提升抢票成功率</span><br><span class="line"></span><br><span class="line"># 刷票模式：1&#x3D;刷票 2&#x3D;候补+刷票</span><br><span class="line">TICKET_TYPE &#x3D; 1</span><br><span class="line"></span><br><span class="line"># 出发日期(list) &quot;2018-01-06&quot;, &quot;2018-01-07&quot;</span><br><span class="line">STATION_DATES &#x3D; [</span><br><span class="line">    &quot;2020-01-18&quot;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"># 填入需要购买的车次(list)，&quot;G1353&quot;</span><br><span class="line"># 修改车次填入规则，注：(以前设置的车次逻辑不变)，如果车次填入为空，那么就是当日乘车所有车次都纳入筛选返回</span><br><span class="line"># 不填车次是整个list为空才算，如果不是为空，依然会判断车次的，这种是错误的写法 [&quot;&quot;], 正确的写法 []</span><br><span class="line">STATION_TRAINS &#x3D; [&quot;D3714&quot;, &quot;D3830&quot;]</span><br><span class="line"></span><br><span class="line"># 出发城市，比如深圳北，就填深圳就搜得到</span><br><span class="line">FROM_STATION &#x3D; &quot;广州南&quot;</span><br><span class="line"></span><br><span class="line"># 到达城市 比如深圳北，就填深圳就搜得到</span><br><span class="line">TO_STATION &#x3D; &quot;梧州南&quot;</span><br><span class="line"></span><br><span class="line"># 座位(list) 多个座位ex:</span><br><span class="line"># &quot;商务座&quot;,</span><br><span class="line"># &quot;一等座&quot;,</span><br><span class="line"># &quot;二等座&quot;,</span><br><span class="line"># &quot;特等座&quot;,</span><br><span class="line"># &quot;软卧&quot;,</span><br><span class="line"># &quot;硬卧&quot;,</span><br><span class="line"># &quot;硬座&quot;,</span><br><span class="line"># &quot;无座&quot;,</span><br><span class="line"># &quot;动卧&quot;,</span><br><span class="line">SET_TYPE &#x3D; [&quot;二等座&quot;, &quot;无座&quot;]</span><br><span class="line"></span><br><span class="line"># 当余票小于乘车人，如果选择优先提交，则删减联系人和余票数一致在提交</span><br><span class="line"># bool</span><br><span class="line">IS_MORE_TICKET &#x3D; True</span><br><span class="line"></span><br><span class="line"># 乘车人(list) 多个乘车人ex:</span><br><span class="line"># &quot;张三&quot;,</span><br><span class="line"># &quot;李四&quot;</span><br><span class="line">TICKET_PEOPLES &#x3D; [&quot;***&quot;]</span><br><span class="line"></span><br><span class="line"># 12306登录账号</span><br><span class="line">USER &#x3D; &quot;lingji*****&quot;</span><br><span class="line">PWD &#x3D; &quot;zhong9******&quot;</span><br><span class="line"></span><br><span class="line"># 加入小黑屋时间默认为5分钟，此功能为了防止僵尸票导致一直下单不成功错过正常的票</span><br><span class="line">TICKET_BLACK_LIST_TIME &#x3D; 5</span><br><span class="line"></span><br><span class="line"># 自动打码</span><br><span class="line">IS_AUTO_CODE &#x3D; True</span><br><span class="line"></span><br><span class="line"># 设置2本地自动打码，需要配置tensorflow和keras库，3为云打码，由于云打码服务器资源有限(为2h4C的cpu服务器)，请不要恶意请求，不然只能关闭服务器</span><br><span class="line"># ps: 请不要一直依赖云服务器资源，在此向所有提供服务器同学表示感谢</span><br><span class="line">AUTO_CODE_TYPE &#x3D; 2</span><br><span class="line"></span><br><span class="line"># 此处设置云打码服务器地址，如果有自建的服务器，可以自行更改</span><br><span class="line">HOST &#x3D; &quot;120.77.154.140:8000&quot;</span><br><span class="line">REQ_URL &#x3D; &quot;&#x2F;verify&#x2F;base64&#x2F;&quot;</span><br><span class="line">HTTP_TYPE &#x3D; &quot;http&quot;</span><br><span class="line"># HOST&#x3D;&quot;12306.yinaoxiong.cn&quot; #备用服务器稳定性较差</span><br><span class="line"># REQ_URL&#x3D;&quot;&#x2F;verify&#x2F;base64&#x2F;&quot;</span><br><span class="line"># HTTP_TYPE&#x3D;&quot;https&quot;</span><br><span class="line"></span><br><span class="line">#  邮箱配置，如果抢票成功，将通过邮件配置通知给您</span><br><span class="line">#  列举163</span><br><span class="line">#  email: &quot;xxx@163.com&quot;</span><br><span class="line">#  notice_email_list: &quot;123@qq.com&quot;</span><br><span class="line">#  username: &quot;xxxxx&quot;</span><br><span class="line">#  password: &quot;xxxxx</span><br><span class="line">#  host: &quot;smtp.163.com&quot;</span><br><span class="line">#  列举qq  ，qq设置比较复杂，需要在邮箱--&gt;账户--&gt;开启smtp服务，取得授权码&#x3D;&#x3D;邮箱登录密码</span><br><span class="line">#  email: &quot;xxx@qq.com&quot;</span><br><span class="line">#  notice_email_list: &quot;123@qq.com&quot;</span><br><span class="line">#  username: &quot;xxxxx&quot;</span><br><span class="line">#  password: &quot;授权码&quot;</span><br><span class="line">#  host: &quot;smtp.qq.com&quot;</span><br><span class="line">EMAIL_CONF &#x3D; &#123;</span><br><span class="line">    &quot;IS_MAIL&quot;: True,</span><br><span class="line">    &quot;email&quot;: &quot;5934*****@qq.com&quot;,</span><br><span class="line">    &quot;notice_email_list&quot;: &quot;5934*****@qq.com&quot;,</span><br><span class="line">    &quot;username&quot;: &quot;593*****&quot;,</span><br><span class="line">    &quot;password&quot;: &quot;tzoljbo******&quot;,</span><br><span class="line">    &quot;host&quot;: &quot;smtp.qq.com&quot;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 是否开启 server酱 微信提醒， 使用前需要前往 http:&#x2F;&#x2F;sc.ftqq.com&#x2F;3.version 扫码绑定获取 SECRET 并关注获得抢票结果通知的公众号</span><br><span class="line">SERVER_CHAN_CONF &#x3D; &#123;</span><br><span class="line">    &quot;is_server_chan&quot;: True,</span><br><span class="line">    &quot;secret&quot;: &quot;SCU63040T5b4f2aee7918e540974374b09****************&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 是否开启cdn查询，可以更快的检测票票 1为开启，2为关闭</span><br><span class="line">IS_CDN &#x3D; 1</span><br><span class="line"></span><br><span class="line"># 下单接口分为两种，1 模拟网页自动捡漏下单（不稳定），2 模拟车次后面的购票按钮下单（稳如老狗）</span><br><span class="line">ORDER_TYPE &#x3D; 2</span><br><span class="line"></span><br><span class="line"># 下单模式 1 为预售，整点刷新，刷新间隔0.1-0.5S, 然后会校验时间，比如12点的预售，那脚本就会在12.00整检票，刷新订单</span><br><span class="line">#         2 是捡漏，捡漏的刷新间隔时间为0.5-3秒，时间间隔长，不容易封ip</span><br><span class="line">ORDER_MODEL &#x3D; 2</span><br><span class="line"></span><br><span class="line"># 是否开启代理, 0代表关闭， 1表示开始</span><br><span class="line"># 开启此功能的时候请确保代理ip是否可用，在测试放里面经过充分的测试，再开启此功能，不然可能会耽误你购票的宝贵时间</span><br><span class="line"># 使用方法：</span><br><span class="line"># 1、在agency&#x2F;proxy_list列表下填入代理ip</span><br><span class="line"># 2、测试UnitTest&#x2F;TestAll&#x2F;testProxy 测试代理是否可以用</span><br><span class="line"># 3、开启代理ip</span><br><span class="line">IS_PROXY &#x3D; 0</span><br><span class="line"></span><br><span class="line"># 预售放票时间, 如果是捡漏模式，可以忽略此操作</span><br><span class="line">OPEN_TIME &#x3D; &quot;12:59:57&quot;</span><br><span class="line"># 1&#x3D;使用selenium获取devicesID</span><br><span class="line"># 2&#x3D;使用网页端&#x2F;otn&#x2F;HttpZF&#x2F;logdevice获取devicesId，这个接口的算法目前可能有点问题，如果登录一直302的请改为配置1</span><br><span class="line"># 3&#x3D;自己打开浏览器在headers-Cookies中抓取RAIL_DEVICEID和RAIL_EXPIRATION，这个就不用配置selenium</span><br><span class="line">COOKIE_TYPE &#x3D; 1</span><br><span class="line"># 如果COOKIE_TYPE&#x3D;1，则需配置chromeDriver路径,下载地址http:&#x2F;&#x2F;chromedriver.storage.googleapis.com&#x2F;index.html</span><br><span class="line"># chromedriver配置版本只要和chrome的大版本匹配就行</span><br><span class="line">CHROME_PATH &#x3D; &quot;&#x2F;usr&#x2F;bin&#x2F;chromedriver&quot;</span><br><span class="line"></span><br><span class="line"># 为了docker37 准备的环境变量，windows环境可以不用管这个参数</span><br><span class="line">CHROME_CHROME_PATH &#x3D; &quot;&#x2F;opt&#x2F;google&#x2F;chrome&#x2F;google-chrome&quot;</span><br><span class="line"></span><br><span class="line"># 如果COOKIE_TYPE&#x3D;3, 则需配置RAIL_EXPIRATION、RAIL_DEVICEID的值</span><br><span class="line">RAIL_EXPIRATION &#x3D; &quot;&quot;</span><br><span class="line">RAIL_DEVICEID &#x3D; &quot;&quot;</span><br><span class="line"># RAIL_EXPIRATION &#x3D; &quot;1577034103293&quot;</span><br><span class="line"># RAIL_DEVICEID &#x3D; &quot;CDno29Erc_Pf3FSXb4dzq-Op64EhWrsi5yUZKVIKR1MAfYo2qFlCeXD8VkexY7_1qg-ClV-fE8j9jgVlPZxRh3wVc2iqLe_5A8sdr62qZx4B22JPF8lFCjpgTKZ5ODW90HJd5tiQsJ1KR9nOqHRxHj1FT5LEIwfw&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 1&#x3D;&gt;为一直随机ua,2-&gt;只启动的时候随机一次ua</span><br><span class="line">RANDOM_AGENT &#x3D; 2</span><br><span class="line"></span><br><span class="line">PASSENGER_TICKER_STR &#x3D; &#123;</span><br><span class="line">    &#39;一等座&#39;: &#39;M&#39;,</span><br><span class="line">    &#39;特等座&#39;: &#39;P&#39;,</span><br><span class="line">    &#39;二等座&#39;: &#39;O&#39;,</span><br><span class="line">    &#39;商务座&#39;: 9,</span><br><span class="line">    &#39;硬座&#39;: 1,</span><br><span class="line">    &#39;无座&#39;: 1,</span><br><span class="line">    &#39;软座&#39;: 2,</span><br><span class="line">    &#39;软卧&#39;: 4,</span><br><span class="line">    &#39;硬卧&#39;: 3,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 保护12306官网请求频率，设置随机请求时间，原则为5分钟不大于80次</span><br><span class="line"># 最大间隔请求时间</span><br><span class="line">MAX_TIME &#x3D; 3</span><br><span class="line"># 最小间隔请求时间</span><br><span class="line">MIN_TIME &#x3D; 1</span><br><span class="line"></span><br><span class="line"># 软件版本</span><br><span class="line">RE_VERSION &#x3D; &quot;1.2.004&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="五、启动"><a href="#五、启动" class="headerlink" title="五、启动"></a>五、启动</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">6、启动(不能在finalshell或者xshell启动) 去带有图形界面的VM下启动，启动会自动弹出一个12306官网页面，不用管，等会就会自动关闭</span><br><span class="line">[root@host4 12306-master]# python run.py  </span><br><span class="line">WARNING:----</span><br><span class="line">WARNING:----</span><br><span class="line"></span><br><span class="line">会报一堆警告信息的 不要理他</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="六、配置邮箱提示"><a href="#六、配置邮箱提示" class="headerlink" title="六、配置邮箱提示"></a>六、配置邮箱提示</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">1、配置QQ邮箱提示</span><br><span class="line">首先去QQ邮箱里面获取一个授权码</span><br><span class="line">设置--&gt; 账户 --&gt;POP3&#x2F;IMAP服务--&gt;开启</span><br><span class="line">然后把授权码复制到passwor双引号里面</span><br><span class="line">EMAIL_CONF &#x3D; &#123;</span><br><span class="line">    &quot;IS_MAIL&quot;: True,</span><br><span class="line">    &quot;email&quot;: &quot;5934****@qq.com&quot;,    &lt;-----QQ邮箱</span><br><span class="line">    &quot;notice_email_list&quot;: &quot;5934****@qq.com&quot;,  &lt;----QQ邮箱</span><br><span class="line">    &quot;username&quot;: &quot;5934*****&quot;,        &lt;-----QQ账号</span><br><span class="line">    &quot;password&quot;: &quot;tzolj********&quot;,  &lt;----授权码</span><br><span class="line">    &quot;host&quot;: &quot;smtp.qq.com&quot;,   </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">2、配置163邮箱提示</span><br><span class="line">也是要先获取授权码</span><br><span class="line">设置 ---&gt;POP3&#x2F;SMTP&#x2F;IMAP ---&gt;客户端授权码 ---&gt;生成授权码</span><br><span class="line">EMAIL_CONF &#x3D; &#123;</span><br><span class="line">    &quot;IS_MAIL&quot;: True,</span><br><span class="line">    &quot;email&quot;: &quot;abcd****@163.com&quot;,</span><br><span class="line">    &quot;notice_email_list&quot;: &quot;abcd****@163.com&quot;,</span><br><span class="line">    &quot;username&quot;: &quot;abcd****&quot;,</span><br><span class="line">    &quot;password&quot;: &quot;tzolj********&quot;,  &lt;----授权码</span><br><span class="line">    &quot;host&quot;: &quot;smtp.163.com&quot;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/06/15/12306/" data-id="ck4l01shy0000fjit91ql0he6"
+         class="article-share-link">Share</a>
+      
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2019/12/25/mybolog/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            搭建个人博客blog
+          
+        </div>
+      </a>
+    
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2019 Jason</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a href="https://github.com/zhwangart/hexo-theme-ocean" target="_blank" rel="noopener">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+
+<aside class="sidebar sidebar-specter">
+  
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="Jason"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

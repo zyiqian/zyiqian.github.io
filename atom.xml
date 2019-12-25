@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-12-25T07:16:53.771Z</updated>
+  <updated>2019-12-25T04:51:42.649Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,38 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>My Gallery</title>
-    <link href="http://yoursite.com/2019/12/25/My-Gallery/"/>
-    <id>http://yoursite.com/2019/12/25/My-Gallery/</id>
-    <published>2019-12-25T07:16:24.000Z</published>
-    <updated>2019-12-25T07:16:53.771Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="http://yoursite.com/2019/12/25/hello-world/"/>
-    <id>http://yoursite.com/2019/12/25/hello-world/</id>
-    <published>2019-12-25T04:29:53.901Z</published>
-    <updated>2019-12-25T04:29:53.899Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-    
-    </summary>
-    
-    
-    
-  </entry>
   
   <entry>
     <title>搭建个人博客blog</title>
@@ -66,22 +34,15 @@
   </entry>
   
   <entry>
-    <title>新增文章置顶</title>
-    <link href="http://yoursite.com/2019/07/18/test/"/>
-    <id>http://yoursite.com/2019/07/18/test/</id>
-    <published>2019-07-18T07:45:03.000Z</published>
-    <updated>2019-12-25T03:48:44.992Z</updated>
+    <title>12306自动抢票Linux版搭建</title>
+    <link href="http://yoursite.com/2019/06/15/12306/"/>
+    <id>http://yoursite.com/2019/06/15/12306/</id>
+    <published>2019-06-15T02:12:33.000Z</published>
+    <updated>2019-12-25T07:51:10.840Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;p&gt;this is my first test！！！！&lt;/p&gt;
-&lt;h2 id=&quot;Quick-Start&quot;&gt;&lt;a href=&quot;#Quick-Start&quot; class=&quot;headerlink&quot; title=&quot;Quick Start&quot;&gt;&lt;/a&gt;Quick Start&lt;/h2&gt;&lt;h3
-        
-      
+      &lt;h2 id=&quot;12306辅助抢票Linux版&quot;&gt;&lt;a href=&quot;#12306辅助抢票Linux版&quot; class=&quot;headerlink&quot; title=&quot;12306辅助抢票Linux版&quot;&gt;&lt;/a&gt;12306辅助抢票Linux版&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;https://i.loli.net/2019/12/25/wFdvxZbCLgTNMue.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
     
     </summary>
     
