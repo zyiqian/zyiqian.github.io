@@ -206,6 +206,77 @@
       
         
 
+<article id="post-Linux_file_permission2" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+  
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h2 itemprop="name">
+      <a class="article-title" href="/2019/07/20/Linux_file_permission2/">文件权限之高级权限</a>
+    </h2>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2019/07/20/Linux_file_permission2/" class="article-date">
+  <time datetime="2019-07-20T12:23:36.000Z" itemprop="datePublished">2019-07-20</time>
+</a>
+        
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a> / <a class="article-category-link" href="/categories/Linux/%E6%95%99%E7%A8%8B/">教程</a>
+  </div>
+
+      </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <h3 id="一-高级权限"><a href="#一-高级权限" class="headerlink" title="一. 高级权限"></a>一. 高级权限</h3><p>高级权限 suid,sgid,sticky</p>
+<p>问题1： 为什么会失败！</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@tianyun ~]# ll /root/file1.txt  -rw-r--r-- 1 root root 4 7月  27 14:14 /root/file1.txt</span><br><span class="line"></span><br><span class="line">[alice@tianyun ~]$ cat /root/file1.txt </span><br><span class="line">cat: /root/file1.txt: 权限不够</span><br></pre></td></tr></table></figure>
+
+<p>分析： root            /usr/bin/cat (root)            /root/file1.txt          OK      </p>
+<pre><code>alice      /usr/bin/cat (alice)            /root/file1.txt </code></pre><p> 普通用户修改密码： alice           /usr/bin/passwd (root)  /etc/shadow</p>
+        
+          <a class="article-more-link" href="/2019/07/20/Linux_file_permission2/">Read More...</a>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/07/20/Linux_file_permission2/" data-id="ck5kq2i5s00001qg4eoj122cl"
+         class="article-share-link">Share</a>
+      
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+
+
+
+      
+        
+
 <article id="post-Linux_file_permission" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
   
   <div class="article-inner">
