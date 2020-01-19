@@ -84,6 +84,43 @@
       </categories>
   </entry>
   <entry>
+    <title>Linux系统的基本操作</title>
+    <url>/2019/07/16/Linux_basis/</url>
+    <content><![CDATA[<p>** Linux也是一个操作系统，类似于Windows一样，但是Linux大多数都是使用命令行的形式去操作，并且它的系统性能也非常稳定以至于现在大多企业的业务都是跑在Linux上。 **</p>
+<p>1.登录root用户</p>
+<p>2.打开主文件夹创建并删除文件</p>
+<p>  列出当前目录的文件：ls</p>
+<a id="more"></a>
+
+<p>3.改变目录：cd  目录名</p>
+<p>4.创建文件:touch 文件名</p>
+<p>5.删除文件： rm -rf  文件名</p>
+<p>6.改名文件：mv  源文件 目标文</p>
+<p>​           剪切：mv  /yuan_path/yuan_filename  /new_path/new_filename </p>
+<p>​    查看历史命令：history</p>
+<p>   执行 num对应的历史命令：！num</p>
+<p>   执行上一条命令：!!</p>
+<p>​    退出系统：exit</p>
+<p>7.文件系统目录结构</p>
+<p>8.关机：init  0</p>
+<p>​     Day 2<br>ls -l  =  ll<br>cd<br>cd /path<br>cd ~ go home<br>cd - 切换<br>cd .. 上级目录</p>
+<p>touch  创建文件<br>mkdir    -pv 创建目录</p>
+<p>cp  src（源文件）  dest    复制<br>mv  src（源文件）  dest    剪切  </p>
+<p>查看文件</p>
+<p>-a  (查看隐藏文件)</p>
+<p>cat   filename（文件名称）       （-n -A）<br>more  filename（文件名称）        （回车下一行，空格下一页，q退出  ^c）<br>head头部<br>tail尾部<br>tac<br>grep  过滤关键字    grep 针对文件内容进行过滤        </p>
+<p>grep ‘root’ /etc/passwd</p>
+<p>grep ‘^root’ /etc/passwd ^以xxx结尾</p>
+<p>grep ‘bash$’ /etc/passwd $以xxx结尾</p>
+<p>grep ‘failure’ /var/log/secure           </p>
+<p>（^以xxx开头的  $以XXX结尾的 ）</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+        <category>教程</category>
+      </categories>
+  </entry>
+  <entry>
     <title>12306自动抢票Linux版搭建</title>
     <url>/2019/06/15/12306/</url>
     <content><![CDATA[<h2 id="12306辅助抢票Linux版"><a href="#12306辅助抢票Linux版" class="headerlink" title="12306辅助抢票Linux版"></a>12306辅助抢票Linux版</h2><p><img src="https://i.loli.net/2019/12/25/wFdvxZbCLgTNMue.jpg" alt=""></p>
