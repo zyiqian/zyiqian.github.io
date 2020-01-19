@@ -63,11 +63,11 @@
     <link href="http://yoursite.com/2019/07/16/Linux_basis/"/>
     <id>http://yoursite.com/2019/07/16/Linux_basis/</id>
     <published>2019-07-16T11:13:36.000Z</published>
-    <updated>2020-01-19T04:12:23.453Z</updated>
+    <updated>2020-01-19T04:16:25.128Z</updated>
     
     <summary type="html">
     
-      &lt;p&gt;** Linux也是一个操作系统，类似于Windows一样，但是Linux大多数都是使用命令行的形式去操作，并且它的系统性能也非常稳定以至于现在大多企业的业务都是跑在Linux上。 **&lt;/p&gt;
+      &lt;p&gt;&lt;strong&gt;Linux也是一个操作系统，类似于Windows一样，但是Linux大多数都是使用命令行的形式去操作，并且它的系统性能也非常稳定以至于现在大多企业的业务都是跑在Linux上。&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;1.登录root用户&lt;/p&gt;
 &lt;p&gt;2.打开主文件夹创建并删除文件&lt;/p&gt;
 &lt;p&gt;  列出当前目录的文件：ls&lt;/p&gt;
