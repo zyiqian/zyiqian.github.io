@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    2.Linux文件系统管理 |
+    
+    Jason</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Jason" type="application/atom+xml">
+</head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-Linux_file_manager" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+  
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      2.Linux文件系统管理
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2019/07/18/Linux_file_manager/" class="article-date">
+  <time datetime="2019-07-18T11:56:06.000Z" itemprop="datePublished">2019-07-18</time>
+</a>
+        
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a> / <a class="article-category-link" href="/categories/Linux/%E6%95%99%E7%A8%8B/">教程</a>
+  </div>
+
+      </div>
+    
+
+    
+      
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <h3 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a>文件管理</h3><h4 id="1-Linux目录结构"><a href="#1-Linux目录结构" class="headerlink" title="1.Linux目录结构"></a>1.Linux目录结构</h4><h5 id="1-1-WINDOWS-LINUX-对比"><a href="#1-1-WINDOWS-LINUX-对比" class="headerlink" title="1.1 WINDOWS/LINUX 对比"></a><strong>1.1 WINDOWS/LINUX 对比</strong></h5><p>Windows: 以多根的方式组织文件 C:\ D:\ E:<br>Linux: 以单根的方式组织文件 /</p>
+<h5 id="1-2-简介"><a href="#1-2-简介" class="headerlink" title="1.2 简介"></a><strong>1.2 简介</strong></h5><a id="more"></a>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/目录结构： FSH (Filesystem Hierarchy Standard)</span><br><span class="line">[root@jason ~]# ls /</span><br><span class="line">bin dev lib media net root srv usr</span><br><span class="line">boot etc lib64 misc opt sbin sys var</span><br><span class="line">cgroup home lost+found mnt proc selinux tmp</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="1-3-图示"><a href="#1-3-图示" class="headerlink" title="1.3 图示"></a><strong>1.3 图示</strong></h5><p><img src="image/1.png" alt="1"></p>
+<h5 id="1-4-目录功能"><a href="#1-4-目录功能" class="headerlink" title="1.4 目录功能"></a><strong>1.4 目录功能</strong></h5><p> [root@jason ~]# yum -y install tree</p>
+<p>[root@jason ~]# tree / -L 1    //查看根目录下文件</p>
+<p>bin 普通用户使用的命令 /bin/ls, /bin/date<br>sbin 管理员使用的命令 /sbin/service<br>dev 设备文件 /dev/sda,/dev/sda1<br>root root用户的HOME<br>home 存储普通用户家目录<br>lost+found fsck修复时，存储没有链接的文件或目录<br>proc 虚拟的文件系统，反映出来的是内核，进程信息或实时状态 </p>
+<p>usr 系统文件，相当于C:\Windows<br>/usr/local 软件安装的目录，相当于C:\Program </p>
+<p>boot 存放的系统启动相关的文件，例如kernel,grub(引导装载程序)<br>etc 配置文件（系统相关如网络/etc/sysconfig/network</p>
+<p>lib 库文件Glibc<br>lib64 库文件Glibc</p>
+<p>tmp 临时文件(全局可写：进程产生的临时文件)<br>var 存放的是一些变化文件，比如数据库，日志，邮件….</p>
+<p>==设备（主要指存储设备）挂载目录==</p>
+<p>media 移动设备默认的挂载点<br>mnt 手工挂载设备的挂载点</p>
+<h4 id="2-文件管理"><a href="#2-文件管理" class="headerlink" title="2.文件管理"></a>2.文件管理</h4><h5 id="2-1-文件类型（理解）"><a href="#2-1-文件类型（理解）" class="headerlink" title="2.1 文件类型（理解）"></a>2.1 文件类型（理解）</h5><ul>
+<li>普通文件（文本文件，二进制文件，压缩文件，电影，图片。。。）</li>
+<li>d 目录文件（蓝色）</li>
+<li>b 设备文件（块设备）存储设备硬盘，U盘 /dev/sda, /dev/sda1</li>
+<li>c 设备文件（字符设备）打印机，终端 /dev/tty1</li>
+<li>l 链接文件（淡蓝色）</li>
+<li>s 套接字文件</li>
+<li>p 管道文件</li>
+</ul>
+<h5 id="2-2示例1"><a href="#2-2示例1" class="headerlink" title="2.2示例1"></a>2.2示例1</h5><p>查看各式各样的文件类型。你能找出几种呢？</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@jason ~]# ll -d /etc/hosts /bin/ls /home /dev/sda /dev/tty1 /etc/grub2.cfg /dev/log /run/dmeventd-client</span><br><span class="line">-rwxr-xr-x. 1 root root 117616 Nov 20 2015 /bin/ls</span><br><span class="line">srw-rw-rw- 1 root root 0 Mar 14 2017 /dev/log</span><br><span class="line">brw-rw---- 1 root disk 8, 0 Mar 14 09:03 /dev/sda</span><br><span class="line">crw--w---- 1 root tty 4, 1 Mar 14 09:03 /dev/tty1</span><br><span class="line">lrwxrwxrwx. 1 root root 22 Dec 21 01:40 /etc/grub2.cfg -&gt; ../boot/grub2/grub.cfg</span><br><span class="line">-rw-r--r-- 1 root root 392 Feb 22 15:51 /etc/hosts</span><br><span class="line">drwxr-xr-x. 10 root root 4096 Mar 14 11:00 /home</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="2-3-示例2"><a href="#2-3-示例2" class="headerlink" title="2.3 示例2"></a><strong>2.3 示例2</strong></h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@jason ~]$ file /etc/hosts</span><br><span class="line">/etc/hosts: ASCII text</span><br><span class="line"></span><br><span class="line">root@jason ~]$ file /bin/ls</span><br><span class="line">/bin/ls: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked (uses shared libs), for GNU/Linux 2.6.32, BuildID[sha1]=aa7ff68f13de25936a098016243ce57c3c982e06, stripped</span><br><span class="line"></span><br><span class="line">[root@jason ~]$ file /dev/sda</span><br><span class="line">/dev/sda: block special</span><br><span class="line"></span><br><span class="line">[root@jason ~]$ file /dev/tty1</span><br><span class="line">/dev/tty1: character special</span><br><span class="line"></span><br><span class="line">[root@jason ~]$ file /etc/grub2.cfg </span><br><span class="line">/etc/grub2.cfg: broken symbolic link to `../boot/grub2/grub.cfg'</span><br><span class="line"></span><br><span class="line">[root@jason ~]$ file /home</span><br><span class="line">/home: directory</span><br><span class="line"></span><br><span class="line">[root@jason ~]$ file /run/dmeventd-client </span><br><span class="line">/run/dmeventd-client: fifo (named pipe)</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong></p>
+<p>通过颜色判断文件的类型是不一定正确的！！！<br>Linux系统中文件是没有扩展名！！！</p>
+<h4 id="3-文件管理命令"><a href="#3-文件管理命令" class="headerlink" title="3.文件管理命令"></a>3.文件管理命令</h4><h5 id="3-1-改变目录"><a href="#3-1-改变目录" class="headerlink" title="3.1  改变目录"></a><strong>3.1  改变目录</strong></h5><p>cd     绝对路径 cd /home/alice</p>
+<p>cd     相对路径 cd .  ..</p>
+<p>cd     专用：</p>
+<p>cd -     返回上次目录 </p>
+<p>cd     直接回家</p>
+<h5 id="2-2-创建文件"><a href="#2-2-创建文件" class="headerlink" title="2.2 创建文件"></a><strong>2.2 创建文件</strong></h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">touch file1.txt //无则创建，有则修改时间</span><br><span class="line"></span><br><span class="line">touch file3 file4</span><br><span class="line"></span><br><span class="line">touch /home/file10.txt</span><br><span class="line"></span><br><span class="line">touch /home/file5 file6</span><br><span class="line"></span><br><span class="line">touch /home/&#123;zhuzhu,gougou&#125;</span><br><span class="line"></span><br><span class="line">touch file&#123;1..20&#125;</span><br><span class="line"></span><br><span class="line">touch file&#123;a..c&#125;</span><br><span class="line"></span><br><span class="line">touch yang&#123;a,b,c&#125; //&#123;&#125;集合，等价touch yanga yangb yangc</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-3-创建目录"><a href="#2-3-创建目录" class="headerlink" title="2.3 创建目录"></a><strong>2.3 创建目录</strong></h5><p>语法：mkdir    -v 详细 -p 递归 目录 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mkdir dir1</span><br><span class="line"></span><br><span class="line">mkdir /home/dir2 /home/dir3</span><br><span class="line"></span><br><span class="line">mkdir /home/&#123;dir4,dir5&#125;</span><br><span class="line"></span><br><span class="line">mkdir -v /home/&#123;dir6,dir7&#125;		#显示详细信息，遍历</span><br><span class="line"></span><br><span class="line">mkdir -v /home/dir8/111/22</span><br><span class="line">mkdir /a/b/c/d (报错)  </span><br><span class="line">mkdir -pv /a/b/c/d</span><br><span class="line"></span><br><span class="line">mkdir -pv /home/dir8/111/222 #包括其父母的创建，不会有任何消息输出</span><br><span class="line"></span><br><span class="line">mkdir -pv /home/&#123;yang/&#123;dir1,111&#125;,jason&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-4-复制"><a href="#2-4-复制" class="headerlink" title="2.4.复制"></a><strong>2.4.复制</strong></h5><p>==复制 cp -r 目录 -v 详细 -f 强制   -n  静默</p>
+<p>Usage: cp [OPTION]… [-T] SOURCE DEST</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">cd</span><br><span class="line"></span><br><span class="line">mkdir /home/dir&#123;1,2&#125;</span><br><span class="line"></span><br><span class="line">cp -v install.log /home/dir1	  //-v 显示详细信息</span><br><span class="line"></span><br><span class="line">cp -v install.log /home/</span><br><span class="line">dir1/yang.txt</span><br><span class="line"></span><br><span class="line">cp -rv /etc /home/dir1    //-r 拷贝文件夹</span><br><span class="line"></span><br><span class="line">cp  -rv  源文件1 源文件2 源文件N  目标文件 //将多个文件拷贝到同一个目录</span><br><span class="line"></span><br><span class="line">cp -rv /etc/sysconfig/network-scripts/ifcfg-eth0 /etc/passwd /etc/grub.conf /etc/hosts .</span><br><span class="line"></span><br><span class="line">cp -r /etc /tmp</span><br><span class="line"></span><br><span class="line">cp -rfn /etc /tmp    //-f, --force 强制</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-5-移动"><a href="#2-5-移动" class="headerlink" title="2.5 移动"></a><strong>2.5 移动</strong></h5><p>1.创建一个新文件file1</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch  /root/file1</span><br></pre></td></tr></table></figure>
+
+<p>2.把file1文件移动到/tmp目录中。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mv    /root/file1    /tmp</span><br><span class="line">ls    /tmp/file1</span><br></pre></td></tr></table></figure>
+
+<p>3.把file1文件更名为file2</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv    /tmp/file1     /tmp/file2</span><br></pre></td></tr></table></figure>
+
+<p>4.观察file1文件已经更名为file2</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls  /tmp/file1    /tmp/file2</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-6-删除"><a href="#2-6-删除" class="headerlink" title="2.6 删除"></a><strong>2.6 删除</strong></h5><p>==删除 rm -r 递归 -f force强制 -v 详细过程     *通配符</p>
+<p>示例1：删除/home/dir1 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /home</span><br><span class="line"></span><br><span class="line">rm -rf dir1</span><br></pre></td></tr></table></figure>
+
+<p>-r 递归<br>-f force强制<br>-v 详细过程</p>
+<p>示例2：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">​&#96;&#96;&#96;shell</span><br><span class="line">[root@jason ~]# mkdir &#x2F;home&#x2F;dir10</span><br><span class="line">[root@jason ~]# touch &#x2F;home&#x2F;dir10&#x2F;&#123;file2,file3,.file4(隐藏文件)&#125;</span><br><span class="line">[root@jason ~]# rm -rf &#x2F;home&#x2F;dir10&#x2F;* &#x2F;&#x2F;不包括隐藏文件</span><br><span class="line">[root@jason ~]# ls &#x2F;home&#x2F;dir10&#x2F; -a</span><br><span class="line">​</span><br></pre></td></tr></table></figure>
+<p>. .. .file4（隐藏文件）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">示例3：</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;shell</span><br><span class="line">[root@jason ~]# rm -rf file*</span><br><span class="line">[root@jason ~]# rm -rf *.pdf</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-7-查看文件内容"><a href="#2-7-查看文件内容" class="headerlink" title="2.7 查看文件内容"></a><strong>2.7 查看文件内容</strong></h5><p>cat全部</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat  /etc/passwd</span><br></pre></td></tr></table></figure>
+
+<p>-n 显示行号</p>
+<p>-A 包括控制字符（换行符/制表符）</p>
+<p>more翻页</p>
+<p>less</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">more  /etc/passwd</span><br><span class="line">less /etc/passwd</span><br></pre></td></tr></table></figure>
+
+<p>head头部</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@jason ~]# head /etc/passwd</span><br><span class="line">[root@jason ~]# head -2 /etc/passwd (输入前两行)</span><br></pre></td></tr></table></figure>
+
+<p>tail尾部</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@jason ~]# tail /etc/passwd</span><br><span class="line">[root@jason ~]# tail -1 /etc/passwd（输出最后一行）</span><br><span class="line">[root@jason ~]# tail /var/log/messages</span><br><span class="line">[root@jason ~]# tail -20 /var/log/messages</span><br><span class="line">[root@jason ~]# tail -f /var/log/secure //-f 动态查看文件的尾部</span><br><span class="line">[root@jason ~]# tail -F /var/log/secure //-F 动态查看文件的尾部</span><br><span class="line">注：vim, gedit编辑文件时，索引号会改变</span><br></pre></td></tr></table></figure>
+
+<p>grep过滤关键字    grep 针对文件内容进行过滤</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">grep 'root' /etc/passwd  root关键字</span><br><span class="line"></span><br><span class="line">grep '^root' /etc/passwd ^以root开头</span><br><span class="line"></span><br><span class="line">grep 'bash$' /etc/passwd $以bash结尾</span><br><span class="line"></span><br><span class="line">grep 'failure' /var/log/secure</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-8-修改文件内容"><a href="#2-8-修改文件内容" class="headerlink" title="2.8 修改文件内容"></a><strong>2.8 修改文件内容</strong></h5><p>VI 的三个模式</p>
+<p><img src="image/1528092982235.png" alt="1528092982235"></p>
+<p>命令模式</p>
+<p>光标定位：</p>
+<ul>
+<li>hjkl                #上下左右<br>   0 / $            #行首行尾<br>   gg /G             #页首页尾</li>
+<li>3G                   #进入第三行  </li>
+<li>/string            #查找字符，n下一个    (n N 可以循环的)    </li>
+</ul>
+<p>文本编辑：</p>
+<ul>
+<li>文本编辑（少量）</li>
+<li>y 复制 yy 3yy# ygg yG (以行为单位)</li>
+<li>d 删除 dd 3dd（删除光标后三行） dgg（删除光标前） dG (删除光标后) </li>
+<li>p 粘贴</li>
+<li>x 删除光标所在的字符</li>
+<li>D 从光标处删除到行尾</li>
+<li>u undo撤销</li>
+<li>^r redo重做</li>
+<li>r 可以用来修改一个字符</li>
+</ul>
+<p>进入其它模式：</p>
+<ul>
+<li><p>a 进入插入模式</p>
+</li>
+<li><p>i 进入插入模式</p>
+</li>
+<li><p>o 进入插入模式</p>
+</li>
+<li><p>A 进入插入模式</p>
+</li>
+</ul>
+<ul>
+<li><p>: 进入末行模式（扩展命令模式）</p>
+</li>
+<li><p>v 进入可视模式</p>
+</li>
+<li><p>^v 进入可视块模式</p>
+</li>
+<li><p>V 进入可视行模式</p>
+</li>
+<li><p>R 进入替换模式</p>
+</li>
+</ul>
+<p>扩展命令模式：</p>
+<p>保存退出</p>
+<ul>
+<li><p>:10 进入第10行 </p>
+</li>
+<li><p>:w 保存 </p>
+</li>
+<li><p>:q 退出 </p>
+</li>
+<li><p>:wq 保存并退出 </p>
+</li>
+<li><p>:w! 强制保存 </p>
+</li>
+<li><p>:q! 不保存并退出 </p>
+</li>
+<li><p>:wq! 强制保存退出</p>
+</li>
+<li><p>:x 保存并退出 ZZ</p>
+</li>
+</ul>
+<p>查找替换</p>
+<ul>
+<li><p>:范围 s/old/new/选项 </p>
+</li>
+<li><p>:1,5 s/root/yang/g         从1－5行的root 替换为yang </p>
+</li>
+</ul>
+<p>读入文件/写文件(另存为)</p>
+<ul>
+<li>:w 存储到当前文件</li>
+<li>:w /tmp/aaa.txt 另存为/tmp/aaa.txt      //另存</li>
+<li>:1,3 w /tmp/2.txt     // 1–3行 另存到 </li>
+<li>:r /etc/hosts 读入文件到当前行后</li>
+<li>:5 r /etc/hosts 读入文件到第5行后</li>
+</ul>
+<p>设置环境 (临时)： </p>
+<ul>
+<li><p>:set nu 设置行号 </p>
+</li>
+<li><p>:set ic 不区分大小写</p>
+</li>
+<li><p>:set ai 自动缩进</p>
+</li>
+<li><p>:set list 显示控制字符</p>
+</li>
+<li><p>:set nonu 取消设置行号 </p>
+</li>
+<li><p>:set noic</p>
+</li>
+</ul>
+<h5 id="2-9-文件基本信息："><a href="#2-9-文件基本信息：" class="headerlink" title="2.9 文件基本信息："></a>2.9 文件基本信息：</h5><p><strong>时间类型</strong></p>
+<p>访问时间：atime，查看内容 //RHEL6会延后修改atime<br>修改时间：mtime，修改内容<br>改变时间：ctime，文件属性，比如权限<br>删除时间：dtime，文件 被删除的时间</p>
+<p><strong>查询示例</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@jason ~]# ls -l install.log</span><br><span class="line">-rw-r--r-- 1 root root 34793 10-23 13:49 install.log</span><br><span class="line"></span><br><span class="line">[root@jason ~]# stat install.log</span><br><span class="line">File: “install.log”</span><br><span class="line">Size: 34793 Blocks: 80 IO Block: 4096 一般文件</span><br><span class="line">Device: 802h/2050d Inode: 65282 Links: 1</span><br><span class="line">Access: (0644/-rw-r--r--) Uid: ( 0/ root) Gid: ( 0/ root)</span><br><span class="line">Access: 2012-10-23 16:53:20.000000000 +0800</span><br><span class="line">Modify: 2012-10-23 13:49:46.000000000 +0800</span><br><span class="line">Change: 2012-10-23 13:49:52.000000000 +0800</span><br></pre></td></tr></table></figure>
+
+<p>ls -l 文件名 仅看的是文件的修改时间</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/07/18/Linux_file_manager/" data-id="ck5kk3dz60000xdg4fm127pcj"
+         class="article-share-link">Share</a>
+      
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2019/12/25/mybolog/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            搭建个人博客blog
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/07/17/Linux_user_manager/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">1.Linux用户管理</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2020 Jason</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a href="https://github.com/zhwangart/hexo-theme-ocean" target="_blank" rel="noopener">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+
+<aside class="sidebar sidebar-specter">
+  
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="Jason"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

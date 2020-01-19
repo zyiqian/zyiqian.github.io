@@ -59,11 +59,33 @@
   </entry>
   
   <entry>
-    <title>Linux用户管理</title>
+    <title>2.Linux文件系统管理</title>
+    <link href="http://yoursite.com/2019/07/18/Linux_file_manager/"/>
+    <id>http://yoursite.com/2019/07/18/Linux_file_manager/</id>
+    <published>2019-07-18T11:56:06.000Z</published>
+    <updated>2020-01-19T05:03:54.558Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;文件管理&quot;&gt;&lt;a href=&quot;#文件管理&quot; class=&quot;headerlink&quot; title=&quot;文件管理&quot;&gt;&lt;/a&gt;文件管理&lt;/h3&gt;&lt;h4 id=&quot;1-Linux目录结构&quot;&gt;&lt;a href=&quot;#1-Linux目录结构&quot; class=&quot;headerlink&quot; title=&quot;1.Linux目录结构&quot;&gt;&lt;/a&gt;1.Linux目录结构&lt;/h4&gt;&lt;h5 id=&quot;1-1-WINDOWS-LINUX-对比&quot;&gt;&lt;a href=&quot;#1-1-WINDOWS-LINUX-对比&quot; class=&quot;headerlink&quot; title=&quot;1.1 WINDOWS/LINUX 对比&quot;&gt;&lt;/a&gt;&lt;strong&gt;1.1 WINDOWS/LINUX 对比&lt;/strong&gt;&lt;/h5&gt;&lt;p&gt;Windows: 以多根的方式组织文件 C:\ D:\ E:&lt;br&gt;Linux: 以单根的方式组织文件 /&lt;/p&gt;
+&lt;h5 id=&quot;1-2-简介&quot;&gt;&lt;a href=&quot;#1-2-简介&quot; class=&quot;headerlink&quot; title=&quot;1.2 简介&quot;&gt;&lt;/a&gt;&lt;strong&gt;1.2 简介&lt;/strong&gt;&lt;/h5&gt;
+    
+    </summary>
+    
+    
+      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+    
+      <category term="教程" scheme="http://yoursite.com/categories/Linux/%E6%95%99%E7%A8%8B/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>1.Linux用户管理</title>
     <link href="http://yoursite.com/2019/07/17/Linux_user_manager/"/>
     <id>http://yoursite.com/2019/07/17/Linux_user_manager/</id>
     <published>2019-07-17T11:30:01.000Z</published>
-    <updated>2020-01-19T04:26:28.380Z</updated>
+    <updated>2020-01-19T05:04:15.322Z</updated>
     
     <summary type="html">
     
