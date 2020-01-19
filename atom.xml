@@ -59,6 +59,29 @@
   </entry>
   
   <entry>
+    <title>Linux用户管理</title>
+    <link href="http://yoursite.com/2019/07/17/Linux_user_manager/"/>
+    <id>http://yoursite.com/2019/07/17/Linux_user_manager/</id>
+    <published>2019-07-17T11:30:01.000Z</published>
+    <updated>2020-01-19T04:26:28.380Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h4 id=&quot;1-用户概览&quot;&gt;&lt;a href=&quot;#1-用户概览&quot; class=&quot;headerlink&quot; title=&quot;1 用户概览&quot;&gt;&lt;/a&gt;1 用户概览&lt;/h4&gt;&lt;h5 id=&quot;1-1-用户-组基本概念&quot;&gt;&lt;a href=&quot;#1-1-用户-组基本概念&quot; class=&quot;headerlink&quot; title=&quot;1.1. 用户/组基本概念!&quot;&gt;&lt;/a&gt;1.1. 用户/组基本概念!&lt;/h5&gt;&lt;p&gt;====================================================&lt;/p&gt;
+&lt;p&gt;Users and groups：&lt;/p&gt;
+&lt;p&gt; . Every process (running program) on the system runs as a particular user.&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+    
+      <category term="教程" scheme="http://yoursite.com/categories/Linux/%E6%95%99%E7%A8%8B/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>Linux系统的基本操作</title>
     <link href="http://yoursite.com/2019/07/16/Linux_basis/"/>
     <id>http://yoursite.com/2019/07/16/Linux_basis/</id>

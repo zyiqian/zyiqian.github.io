@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    Linux用户管理 |
+    
+    Jason</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Jason" type="application/atom+xml">
+</head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-Linux_user_manager" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+  
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Linux用户管理
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2019/07/17/Linux_user_manager/" class="article-date">
+  <time datetime="2019-07-17T11:30:01.000Z" itemprop="datePublished">2019-07-17</time>
+</a>
+        
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a> / <a class="article-category-link" href="/categories/Linux/%E6%95%99%E7%A8%8B/">教程</a>
+  </div>
+
+      </div>
+    
+
+    
+      
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <h4 id="1-用户概览"><a href="#1-用户概览" class="headerlink" title="1 用户概览"></a>1 用户概览</h4><h5 id="1-1-用户-组基本概念"><a href="#1-1-用户-组基本概念" class="headerlink" title="1.1. 用户/组基本概念!"></a>1.1. 用户/组基本概念!</h5><p>====================================================</p>
+<p>Users and groups：</p>
+<p> . Every process (running program) on the system runs as a particular user.</p>
+<a id="more"></a>
+<p>系统上的每个进程（运行的程序）都是作为特定用户运行的</p>
+<p>. Every file is owned by a particular user. </p>
+<p>每个文件是由一个特定的用户拥有 . Access to files and directories are restricted by user. </p>
+<p>访问文件和目录受到用户的限制 </p>
+<p> . The user associated with a running process determines the files and directories accessible to that process. </p>
+<p>  与正在运行的进程相关联的用户确定该进程可访问的文件和目录</p>
+<p>#######################################################</p>
+<p><strong>shell 是用户登录后运行的第一个程序</strong></p>
+<p>/sbin/nologin   用户无法登录系统，实现管理。仅作为运行进程的用户，访问FTP的用户，安全的用户</p>
+<p>/bin/bash  登录系统，实现管理</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">过滤可登录账户</span><br><span class="line">[root@smile ~]# grep &#39;bash$&#39; &#x2F;etc&#x2F;passwd</span><br><span class="line">root:x:0:0:root:&#x2F;root:&#x2F;bin&#x2F;bash</span><br><span class="line">zhang:x:1000:1000::&#x2F;home&#x2F;zhang:&#x2F;bin&#x2F;bash</span><br><span class="line">zhong:x:1001:1001::&#x2F;home&#x2F;zhong:&#x2F;bin&#x2F;bash</span><br><span class="line">过滤不可登录用户</span><br><span class="line">[root@smile ~]# grep &#39;nologin$&#39; &#x2F;etc&#x2F;passwd</span><br><span class="line">bin:x:1:1:bin:&#x2F;bin:&#x2F;sbin&#x2F;nologin</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="2-用户管理"><a href="#2-用户管理" class="headerlink" title="2 用户管理"></a>2 用户管理</h4><p>=======================================================</p>
+<p>groupadd,groupdel useradd,usermod,userdel passwd,chage</p>
+<ul>
+<li><p>Options:<br>  -b, –base-dir BASE_DIR       指定创建用户HOME目录的位置，一般结合 –D 使用<br>  -c, –comment COMMENT         给新用户添加备注<br>  -d, –home-dir HOME_DIR       指定用户家目录的文件名<br>  -D, –defaults                用来查看创建账户时的默认值，也就是/etc/default/useradd文件中的内容<br>  -e, –expiredate EXPIRE_DATE  用YYYY-MM-DD格式指定一个账户过期的日期<br>  -f, –inactive INACTIVE       指定这个账户密码过期后多少天这个账户被禁用；0表示密码一过期就被禁用，-1表示禁用这</p>
+<pre><code>个功能</code></pre><p>  -g, –gid GROUP               指定用户所属组的GID或组名<br>  -G, –groups GROUPS           指定用户除所属组外的一个或多个附加组<br>  -h, –help                    display this help message and exit<br>  -k, –skel SKEL_DIR           必须和-m一起使用，将/etc/skel目录的内容复制到用户的HOME目录<br>  -K, –key KEY=VALUE           主要用来改写/etc/login.defs文件中的默认值，如：-K UID_MIN=100 –K UID_MAX=499<br>  -l, –no-log-init             do not add the user to the lastlog and</p>
+<pre><code>faillog databases</code></pre><p>  -m, –create-home             创建用户的HOME目录<br>  -M, –no-create-home          不创建用户的HOME目录<br>  -N, –no-user-group           不创建与用户同名的用户组<br>  -o, –non-unique              仅与-u选项结合使用，允许创建一个用户ID不唯一的用户<br>  -p, –password PASSWORD       为用户指定默认密码<br>  -r, –system                  创建系统账户<br>  -R, –root CHROOT_DIR         允许用户根据配置文件来切换家目录<br>  -s, –shell SHELL             指定用户登录的shell<br>  -u, –uid UID                 指定用户的UID<br>  -U, –user-group              创建与用户同名的组<br>  -Z, –selinux-user SEUSER     此选项不常用</p>
+</li>
+<li><p>举例说明：</p>
+<p>创建名为jerry的用户，指定HOME目录:/home/h_jerry,指定UID 1022，不创建同名用户组，指定密码：jerry,指定shell:/bin/sh,指定账户过期时间：2017-08-09，允许密码过期后使用，添加用户描述：first user</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@ha1 ~]# useradd -m -d &#x2F;home&#x2F;h_jerry -u 1022 -N -p jerry -s &#x2F;bin&#x2F;sh -e 2017-08-09 -f -1 -c &quot;first user&quot; jerry</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h5 id="2-1-用户组"><a href="#2-1-用户组" class="headerlink" title="2.1 用户组"></a>2.1 用户组</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@jason ~]# groupadd hr</span><br><span class="line"></span><br><span class="line">[root@jason ~]# groupadd sale</span><br><span class="line"></span><br><span class="line">[root@jason ~]# groupadd it</span><br><span class="line"></span><br><span class="line">[root@jason ~]# groupadd fd</span><br><span class="line"></span><br><span class="line">[root@jason ~]# groupadd market</span><br><span class="line"></span><br><span class="line">[root@jason ~]# groupadd net01 -g 2000		        //添加组net01，并指定gid 2000</span><br><span class="line"></span><br><span class="line">[root@jason ~]# grep 'net01' /etc/group		            //查看/etc/group中组net01信息</span><br><span class="line"></span><br><span class="line">[root@jason ~]# groupdel net01</span><br></pre></td></tr></table></figure>
+
+<p>​                        //删除组net01</p>
+<h5 id="2-2用户"><a href="#2-2用户" class="headerlink" title="2.2用户"></a>2.2用户</h5><p>useradd creates users </p>
+<p>＝＝创建用户 未指定选项＝＝</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@jason ~]# useradd user01</span><br></pre></td></tr></table></figure>
+
+<p>​        </p>
+<p> . 未指定该用户的主组</p>
+<p> . 未指定该用户的附加组</p>
+<p> . 未指定用户的HOME . 未指定用户的SHELL</p>
+<p> . 未指定用户的UID…</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@jason ~]# grep 'user01' /etc/passwd /etc/shadow /etc/group  /var/spool/mail</span><br></pre></td></tr></table></figure>
+
+<p> /etc/passwd:user01:x507:512::/home/user01:/bin/bash /etc/shadow:user01:!!:16589:0:99999:7::: </p>
+<p>/etc/group:user01：x:512:</p>
+<p>/etc/passwd         mysql2 :x：1000:1000:mysql2:/home/mysql2:/bin/bash      用户信息</p>
+<p>/etc/shadow         mysql2:$1$G852z3He$lID6wwiIqQMNaJI97xSTx.:18132:0:99999:7:::    密码信息            </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$1       $G852z3He $lID6wwiIqQMNaJI97xSTx.:18132:0:99999:7::(密码有效期):    </span><br><span class="line">加密算法  盐        加密    18132密码最后修改时间 0密码最短修改时间 99最大存活时间99天后需要修改密码</span><br><span class="line">加密算法$id：</span><br><span class="line">$1：MD5</span><br><span class="line">$5：SHA-256	</span><br><span class="line">$6：SHA-512</span><br></pre></td></tr></table></figure>
+
+<p>/etc/group        mysql2​: x :​1000:          组信息</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@jason ~]# id user01</span><br></pre></td></tr></table></figure>
+
+<p>  uid=507(user01) gid=512(user01) groups=512(user01)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shell[root@jason ~]# ls /var/spool/mail/user01</span><br></pre></td></tr></table></figure>
+
+
+
+<p>/var/spool/mail/user01</p>
+<p>***小结： 如果创建一个用户时，未指定任何组（主组或附加组），系统会创建一个和用户名相同的组作为用户的Primary Group.</p>
+<p>  #####c.</p>
+<h5 id="2-3-创建用户"><a href="#2-3-创建用户" class="headerlink" title="2.3.创建用户"></a>2.3.创建用户</h5><p>指定选项</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@jason ~]# useradd user02 -u 503        //创建用户usr02，指定uid</span><br><span class="line"></span><br><span class="line">[root@jason ~]# useradd user03 -d /aaa	     //创建用户user03 指定家目录</span><br><span class="line">[root@jason ~]# useradd user05 -s /sbin/nologin 	    //创建用户并指定shell一般设置这样的帐号是给启动服务的账号所用的，这只是让服务启动起来，但是不能登录系统</span><br><span class="line">[root@jason ~]# useradd user07 -G hr,it,fd		    //创建用户，指定附加组</span><br><span class="line">[root@jason ~]# useradd user10 -u 4000 -s /sbin/nologin</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<p>userdel deletes users</p>
+<h5 id="2-4删除用户"><a href="#2-4删除用户" class="headerlink" title="2.4删除用户"></a>2.4删除用户</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@jason ~]# userdel user10		                           //删除用户user10，但不删除用户家目录和mail spool</span><br><span class="line"></span><br><span class="line">[root@jason ~]# ll -d /home/user10/</span><br><span class="line">drwx------ 3 506 510 4096 09-01 21:14 /home/user10/</span><br><span class="line">[root@jason ~]# ll /var/mail/user10 </span><br><span class="line">-rw-rw---- 1 506 mail 0 09-01 21:14 /var/mail/user10</span><br><span class="line">[root@jason ~]# userdel -r user2                              //删除用户user2，同时删除用户家目录和mail spool</span><br></pre></td></tr></table></figure>
+
+<p>＝＝用户密码＝＝</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@jason ~]# passwd alice                                  //root可以给任何用户设置密码</span><br><span class="line">[zhuzhu@jason ~]$ passwd                                      //普通用户只能给自己修改密</span><br></pre></td></tr></table></figure>
+
+<p>码，而且必须提供原密码</p>
+<p>usermod modifies existing users</p>
+<h4 id="3-组成员管理"><a href="#3-组成员管理" class="headerlink" title="3 组成员管理"></a>3 组成员管理</h4><p>注意：只针对已存在的用户</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@jason ~]# usermod -G hr niuniu2                     //覆盖原有的附加组</span><br><span class="line">[root@jason ~]# usermod -G fd,it niuniu2</span><br><span class="line">[root@jason ~]# usermod -aG hr niuniu2                   //增加新的附加组</span><br><span class="line"></span><br><span class="line">[root@jason~]# gpasswd -a jack wheel                     //usermod -aG hr zhuzhu</span><br><span class="line">[root@jason~]# gpasswd -M zhuzhu,maomao100 hr   // 添加zhuzhu，maomao  hr组          </span><br><span class="line">[root@jason~]# gpasswd -d zhuzhu hr    //删除组hr</span><br></pre></td></tr></table></figure>
+
+<p>＝＝其它选项管理＝＝</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@jason ~]# usermod -s /sbin/nologin zhong   //不可登录</span><br><span class="line">[root@smile_fuxi ~]# su - zhong</span><br><span class="line">This account is currently not available.</span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/07/17/Linux_user_manager/" data-id="ck5kiqqvk00009xit4h2t7vma"
+         class="article-share-link">Share</a>
+      
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2019/12/25/mybolog/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            搭建个人博客blog
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/07/16/Linux_basis/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">Linux系统的基本操作</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2020 Jason</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a href="https://github.com/zhwangart/hexo-theme-ocean" target="_blank" rel="noopener">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+
+<aside class="sidebar sidebar-specter">
+  
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="Jason"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>
