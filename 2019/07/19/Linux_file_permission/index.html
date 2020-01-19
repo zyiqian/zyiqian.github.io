@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    1、文件权限 |
+    
+    Jason</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Jason" type="application/atom+xml">
+</head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  
+
+<article id="post-Linux_file_permission" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+  
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      1、文件权限
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2019/07/19/Linux_file_permission/" class="article-date">
+  <time datetime="2019-07-19T12:13:36.000Z" itemprop="datePublished">2019-07-19</time>
+</a>
+        
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a> / <a class="article-category-link" href="/categories/Linux/%E6%95%99%E7%A8%8B/">教程</a>
+  </div>
+
+      </div>
+    
+
+    
+      
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+        <h3 id="文件权限-Ⅰ"><a href="#文件权限-Ⅰ" class="headerlink" title="文件权限 Ⅰ"></a>文件权限 Ⅰ</h3><h4 id="1-基本权限-UGO"><a href="#1-基本权限-UGO" class="headerlink" title="1.基本权限 UGO"></a>1.基本权限 UGO</h4><p>ls –l    查看文件或目录的权限</p>
+<p>umask   查看或设置权限遮罩（即实际权限=最大权限-遮罩值）</p>
+<p>chmod   改变文件或目录的权限</p>
+<p>chown   更改文件或目录的所有者</p>
+<a id="more"></a>
+<p>chgrp    更改文件或目录的所属组</p>
+<p>getfacl   获取文件或目录权限访问控制列表</p>
+<p>setfacl   设置文件或目录权限访问控制列表</p>
+<p>=====================================================</p>
+<p>权限对象： </p>
+<p>属主：          u</p>
+<p> 属组：         g</p>
+<p> 其他人:          o </p>
+<p> 基本权限类型： </p>
+<p>读：r             4</p>
+<p> 写：w        2 </p>
+<p>执行: x        1</p>
+<p>rwx                   rw-               r–                     alice         hr            file1.txt</p>
+<p>属主权限        属组权限      其他人权限      属主        属组</p>
+<p>一、  alice对file1.txt文件有什么权限？</p>
+<p>​      a. alice是所有者，有rwx权限</p>
+<p>二  、jack对file1.txt文件有什么权限？ 前提：jack属于hr组</p>
+<p>a. jack是所有者吗？ </p>
+<p>b. jack属于hr组， 有rw权限</p>
+<p>三 tom对file1.txt文件有什么权限？ </p>
+<p>a. tom是所有者吗？</p>
+<p> b. tom属于hr组吗？</p>
+<p>  c. tom为其他人，只有 r 权限 </p>
+<h5 id="1-1-设置权限"><a href="#1-1-设置权限" class="headerlink" title="1.1.设置权限"></a>1.1.设置权限</h5><p>更改文件的属主、属组  </p>
+<h6 id="chown-更改文件或目录的所有者"><a href="#chown-更改文件或目录的所有者" class="headerlink" title="chown   更改文件或目录的所有者"></a>chown   更改文件或目录的所有者</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@jason ~]# chown alice.hr file1          //改属主、属组</span><br><span class="line">[root@jason ~]# chown alice     file1 	        //只改属主</span><br><span class="line">[root@jason ~]# chown        .hr file1	       //只改属组</span><br><span class="line">[root@jason ~]# chown -R zhouchen.hr dir1   R(递归) 操作文件和目录</span><br></pre></td></tr></table></figure>
+
+<h6 id="chgrp：更改文件或目录的所属组"><a href="#chgrp：更改文件或目录的所属组" class="headerlink" title="chgrp：更改文件或目录的所属组"></a>chgrp：更改文件或目录的所属组</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@jason ~]# chgrp it file1			 //改文件属组 </span><br><span class="line"></span><br><span class="line">[root@jason ~]# chgrp -R it dir1			   //改文件属组</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="1-2-更改权限"><a href="#1-2-更改权限" class="headerlink" title="1.2.更改权限"></a>1.2.更改权限</h5><h6 id="a-使用符号"><a href="#a-使用符号" class="headerlink" title="a. 使用符号"></a>a. 使用符号</h6><p>​            对象        赋值符        权限类型     </p>
+<p>​                         u                       +                         r</p>
+<p>chmod             g                        -                          w              file1</p>
+<p>​                         o                        =                          x </p>
+<p>​                         a</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@jason ~]# chmod u+x file1	      //属主增加执行</span><br><span class="line"></span><br><span class="line">[root@jason ~]# chmod a=rwx file1	     //所有人等于读写执行</span><br><span class="line">[root@jason ~]# chmod a=- file1	      //所有人没有权限</span><br><span class="line">[root@jason ~]# chmod ug=rw,o=r file1     //属主属组等于读写，其他人只读</span><br><span class="line">[root@jason ~]# ll file1 			      //以长模式方式查看文件权限</span><br><span class="line">-rw-rw-r-- 1 alice it 17 10-25 16:45 file1	    //显示的结果</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="b-使用数字"><a href="#b-使用数字" class="headerlink" title="b.使用数字"></a>b.使用数字</h6><p>[</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@jason ~]# chmod 644 file1</span><br><span class="line"></span><br><span class="line"> [root@jason ~]# ll file1</span><br><span class="line"></span><br><span class="line"> -rw-r--r-- 1 alice it 17 10-25 16:45 file11</span><br></pre></td></tr></table></figure>
+
+<p><img src="image%5C%E6%9D%83%E9%99%901.png" alt=""></p>
+<p><img src="image%5C%E6%9D%83%E9%99%903.png" alt=""></p>
+<h4 id="2-权限案例-UGO"><a href="#2-权限案例-UGO" class="headerlink" title="2 .权限案例 UGO"></a>2 .权限案例 UGO</h4><p>======================================================</p>
+<h5 id="2-1-设置权限案例"><a href="#2-1-设置权限案例" class="headerlink" title="2.1.设置权限案例"></a>2.1.设置权限案例</h5><p>针对hr部门的访问目录/home/hr设置权限，要求如下:</p>
+<ol>
+<li><p>root用户和hr组的员工可以读、写、执行</p>
+</li>
+<li><p>其他用户没有任何权限</p>
+</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@jason ~]# groupadd hr</span><br><span class="line">[root@jason ~]# useradd hr01 -G hr</span><br><span class="line">[root@jason ~]# useradd hr02 -G hr</span><br><span class="line">[root@jason ~]# mkdir /home/hr</span><br><span class="line"></span><br><span class="line">[root@jason ~]# chgrp hr /home/hr</span><br><span class="line"></span><br><span class="line"> [root@jason ~]# chmod 770 /home/hr </span><br><span class="line"></span><br><span class="line">[root@jason ~]# ll -d /home/hr/</span><br><span class="line"></span><br><span class="line"> drwxrwx---. 2 root hr 4096 3月  13 14:26 /home/hr/</span><br></pre></td></tr></table></figure>
+
+<p><strong>**</strong>重要： r、w、x权限对文件和目录的意义</p>
+<p><img src="image%5C%E6%9D%83%E9%99%904.png" alt=""></p>
+<h5 id="2-2-rwx对文件的影响"><a href="#2-2-rwx对文件的影响" class="headerlink" title="2.2.rwx对文件的影响"></a>2.2.rwx对文件的影响</h5><p>实战案例1：rwx对文件的影响</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[root@jason ~]# vim /home/file1</span><br><span class="line"></span><br><span class="line">date</span><br><span class="line"></span><br><span class="line">[root@jason ~]# ll /home/file1</span><br><span class="line"></span><br><span class="line"> -rw-r--r-- 1 root root 5 7月  26 14:43 /home/file1</span><br><span class="line"></span><br><span class="line"> [root@jason ~]# chmod o+x /home/file1</span><br><span class="line"></span><br><span class="line"> [root@jason ~]# chmod o+w /home/file1</span><br><span class="line"></span><br><span class="line">[root@jason ~]# su - alice</span><br><span class="line"></span><br><span class="line">[alice@jason ~]$ cat /home/file1          //测试读</span><br><span class="line"></span><br><span class="line">[alice@jason ~]$ /home/file1               //测试执行</span><br><span class="line">-bash: /home/file1: 权限不够</span><br><span class="line">[alice@jason ~]$ /home/file1</span><br><span class="line">2017年 07月 26日 星期三 14:46:29 CST</span><br><span class="line"></span><br><span class="line">[alice@jason ~]$ vim /home/file1         //测试写</span><br><span class="line">date</span><br><span class="line">ls</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-3-rwx对目录的影响"><a href="#2-3-rwx对目录的影响" class="headerlink" title="2.3.rwx对目录的影响"></a>2.3.rwx对目录的影响</h5><p>实战案例2：对目录没有w，对文件有rwx</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@jason ~]# mkdir /dir10</span><br><span class="line">[root@jason ~]# touch /dir10/file1</span><br><span class="line">[root@jason ~]# chmod 777 /dir10/file1 </span><br><span class="line"></span><br><span class="line">[root@jason ~]# ll -d /dir10/</span><br><span class="line">drwxr-xr-x. 2 root root 4096 3月  11 18:37 /dir10/</span><br><span class="line">[root@jason ~]# ll /dir10/file1 </span><br><span class="line">-rwxrwxrwx. 1 root root 0 3月  11 18:37 /dir10/file1</span><br><span class="line"></span><br><span class="line">[alice@jason ~]$ cat /dir10/file1 </span><br><span class="line">[alice@jason ~]$ rm -rf /dir10/file1 </span><br><span class="line">rm: 无法删除"/dir10/file1": 权限不够</span><br></pre></td></tr></table></figure>
+
+
+
+<p>实战案例3：对目录有w，对文件没有任何权限</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@jason ~]# chmod 777 /dir10/</span><br><span class="line">[root@jason ~]# chmod 000 /dir10/file1 </span><br><span class="line">[root@jason ~]# ll -d /dir10/</span><br><span class="line">drwxrwxrwx. 2 root root 4096 3月  11 18:37 /dir10/</span><br><span class="line">[root@jason ~]# ll /dir10/file1 </span><br><span class="line">----------. 1 root root 0 3月  11 18:37 /dir10/file1</span><br><span class="line"></span><br><span class="line">[alice@jason ~]$ cat /dir10/file1 </span><br><span class="line">cat: /dir10/file1: 权限不够</span><br><span class="line">[alice@jason ~]$ rm -rf /dir10/file1 </span><br><span class="line">[alice@jason ~]$ touch /dir10/file2</span><br></pre></td></tr></table></figure>
+
+<p>小结</p>
+<p> <strong>对目录有w权限，可以在目录中创建新文件，可以删除目录中的文件（跟文件权限无关）</strong>即使文件有777权限 目录没有w 用户依然不能删除，如果目录有w权限，文件即使000权限都可以删除</p>
+<p> 注意事项</p>
+<p> 文件： x 权限小心给予</p>
+<p>目录： w 权限小心给予</p>
+<p>再次认识一下文件和目录：</p>
+<p><img src="image%5C%E6%9D%83%E9%99%905.png" alt=""></p>
+<h4 id="3-基本权限ACL"><a href="#3-基本权限ACL" class="headerlink" title="3. 基本权限ACL"></a>3. 基本权限ACL</h4><p>====================================================</p>
+<p>文件权限管理之： </p>
+<p>UGO设置基本权限：  只能一个用户，一个组和其他人 </p>
+<p>ACL 设置基本权限：  r,w,x</p>
+<h6 id="getfacl-：-获取文件或目录权限访问控制列表"><a href="#getfacl-：-获取文件或目录权限访问控制列表" class="headerlink" title="getfacl ： 获取文件或目录权限访问控制列表"></a>getfacl ： 获取文件或目录权限访问控制列表</h6><h6 id="setfacl-：-设置文件或目录权限访问控制列表"><a href="#setfacl-：-设置文件或目录权限访问控制列表" class="headerlink" title="setfacl ：  设置文件或目录权限访问控制列表"></a>setfacl ：  设置文件或目录权限访问控制列表</h6><h5 id="3-1-ACL基本用法"><a href="#3-1-ACL基本用法" class="headerlink" title="3.1.ACL基本用法"></a>3.1.ACL基本用法</h5><p>设置：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">[root@jason ~]# touch /tmp/a</span><br><span class="line">[root@jason ~]# ll /tmp/a</span><br><span class="line">-rw-r--r--. 1 root root     0 Jul 27 16:14 a</span><br><span class="line">[root@jason ~]# getfacl /tmp/a</span><br><span class="line"><span class="meta">#</span><span class="bash"> file: tmp/a</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> owner: root</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> group: root</span></span><br><span class="line">user::rw-</span><br><span class="line">group::r--</span><br><span class="line">other::r--</span><br><span class="line">[zhong@jason ~]$ echo '1111' &gt;&gt; /tmp/a</span><br><span class="line">-bash: /tmp/a: Permission denied</span><br><span class="line">[root@jason ~]# setfacl -m u:zhong:rw /tmp/a</span><br><span class="line">//增加用户alice权限</span><br><span class="line">[zhong@jason ~]$ echo '123' &gt;&gt; /tmp/a</span><br><span class="line">[zhong@jason ~]$ cat /tmp/a</span><br><span class="line">sdadsad</span><br><span class="line">123</span><br><span class="line">[zhong@jason ~]$ rm -rf /tmp/a</span><br><span class="line">rm: cannot remove ‘/tmp/a’: Operation not permitted  //没有X权限</span><br><span class="line">[root@jason ~]# setfacl -m u:zhang:- /tmp/a</span><br><span class="line">[root@jason ~]# su - zhang</span><br><span class="line">[zhang@jason ~]$ cat /tmp/a</span><br><span class="line">cat: /tmp/a: Permission denied</span><br><span class="line">//增加用户jack权限</span><br><span class="line">[root@jason ~]# setfacl -m o::rw /tmp/a</span><br><span class="line">-rw-rw-rw-+ 1 root root 0 Jul 20 10:21 /home/test.txt</span><br><span class="line">[li@jason ~]$ cat /tmp/a</span><br><span class="line">sdadsad</span><br><span class="line">123</span><br><span class="line">[li@jason ~]$ echo '213123' &gt;&gt; /tmp/a</span><br><span class="line"></span><br><span class="line">//即使给‘zhong’ rwx 权限 还是无法提权 和删除 </span><br><span class="line">[root@jason ~]# setfacl -m u:zhong:rwx /tmp/a</span><br><span class="line">[zhong@jason ~]$ chown zhong /tmp/a</span><br><span class="line">chown: changing ownership of ‘/tmp/a’: Operation not permitted</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-2-查看-删除："><a href="#3-2-查看-删除：" class="headerlink" title="3.2.查看/删除："></a>3.2.查看/删除：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@jason ~]# ll /home/test.txt </span><br><span class="line">-rw-rw-r--+ 1 root root 0 10-26 13:59 /home/test.txt</span><br><span class="line">[root@jason ~]# getfacl /home/test.txt</span><br><span class="line"></span><br><span class="line">[root@jason ~]# setfacl -m g:hr:r /home/test.txt</span><br><span class="line">[root@jason ~]# setfacl -x g:hr /home/test.txt	 			    //删除组hr的acl权限</span><br><span class="line">[root@jason ~]# setfacl -b /home/test.txt 		 				//删除所有acl权限</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-2-查看帮助"><a href="#3-2-查看帮助" class="headerlink" title="3.2.查看帮助"></a>3.2.查看帮助</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> [root@jason ~]# man setfacl /EXAMPLES </span><br><span class="line"></span><br><span class="line">[root@jason ~]#  getfacl file1 |setfacl  --set-file=- file2       //复制file1的ACL权限给file2</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@jason ~]# chmod a-x /usr/bin/chmod       如何添加x权限？？？</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-3ALC高级特性"><a href="#3-3ALC高级特性" class="headerlink" title="3.3ALC高级特性"></a>3.3ALC高级特性</h5><p>mask:<br>用于临时降低用户或组（除属主和其他人）的权限<br>mask决定了他们的最高权限<br>建议：为了方便管理文件权限，其他人的权限设置为空</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@huanan home]# setfacl -m u:jason:rw,u:jack:r file1 </span><br><span class="line">[root@huanan home]# getfacl file1 </span><br><span class="line"># file: file1</span><br><span class="line"># owner: root</span><br><span class="line"># group: root</span><br><span class="line">user::rw-</span><br><span class="line">user:jason:rw-</span><br><span class="line">user:jack:r--</span><br><span class="line">group::r--</span><br><span class="line">mask::rw-</span><br><span class="line">other::r--</span><br></pre></td></tr></table></figure>
+
+
+
+<p>问题：<br>chmod a-x /usr/bin/chmod<br>怎么把chmod权限加回去</p>
+<p>setfacl -m u:root:rwx /usr/bin/chmod<br>chmod a+x /usr/bin/chmod<br>setfacl -b /usr/bin/chmod</p>
+<hr>
+<p>chmod u-x /usr/bin/chmod      X<br>chmod a+x /usr/bin/chmod   </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/07/19/Linux_file_permission/" data-id="ck5kkphvr00005cg4dnum1hws"
+         class="article-share-link">Share</a>
+      
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2019/12/25/mybolog/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            搭建个人博客blog
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/07/18/Linux_file_manager/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">2.Linux文件系统管理</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2020 Jason</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a href="https://github.com/zhwangart/hexo-theme-ocean" target="_blank" rel="noopener">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+
+<aside class="sidebar sidebar-specter">
+  
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="Jason"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

@@ -59,6 +59,30 @@
   </entry>
   
   <entry>
+    <title>1、文件权限</title>
+    <link href="http://yoursite.com/2019/07/19/Linux_file_permission/"/>
+    <id>http://yoursite.com/2019/07/19/Linux_file_permission/</id>
+    <published>2019-07-19T12:13:36.000Z</published>
+    <updated>2020-01-19T05:18:02.924Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;文件权限-Ⅰ&quot;&gt;&lt;a href=&quot;#文件权限-Ⅰ&quot; class=&quot;headerlink&quot; title=&quot;文件权限 Ⅰ&quot;&gt;&lt;/a&gt;文件权限 Ⅰ&lt;/h3&gt;&lt;h4 id=&quot;1-基本权限-UGO&quot;&gt;&lt;a href=&quot;#1-基本权限-UGO&quot; class=&quot;headerlink&quot; title=&quot;1.基本权限 UGO&quot;&gt;&lt;/a&gt;1.基本权限 UGO&lt;/h4&gt;&lt;p&gt;ls –l    查看文件或目录的权限&lt;/p&gt;
+&lt;p&gt;umask   查看或设置权限遮罩（即实际权限=最大权限-遮罩值）&lt;/p&gt;
+&lt;p&gt;chmod   改变文件或目录的权限&lt;/p&gt;
+&lt;p&gt;chown   更改文件或目录的所有者&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+    
+      <category term="教程" scheme="http://yoursite.com/categories/Linux/%E6%95%99%E7%A8%8B/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>2.Linux文件系统管理</title>
     <link href="http://yoursite.com/2019/07/18/Linux_file_manager/"/>
     <id>http://yoursite.com/2019/07/18/Linux_file_manager/</id>
@@ -85,7 +109,7 @@
     <link href="http://yoursite.com/2019/07/17/Linux_user_manager/"/>
     <id>http://yoursite.com/2019/07/17/Linux_user_manager/</id>
     <published>2019-07-17T11:30:01.000Z</published>
-    <updated>2020-01-19T05:04:15.322Z</updated>
+    <updated>2020-01-19T05:05:09.185Z</updated>
     
     <summary type="html">
     
